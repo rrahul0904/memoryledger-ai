@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: memoryledger
+    ports:
+      - "5432:5432"
+    volumes:
+      - memoryledger_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d memoryledger"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+volumes:
+  memoryledger_pg:
